@@ -1,0 +1,15 @@
+{% for blog in user_blog%}
+<div>
+    <div class="m-3">
+        <a href="{% url 'view_blog' blog.blog_id %}" target="_blank">{{ blog.tittle }}</a>
+        <p class="text-truncate my-3">{{ blog.content }}</p>
+        <p>{{ blog.create_Time | date:'Y-m-d H:i:s' }}</p>
+    </div>
+    <div class="m-3 btn-group float-right">
+        <button class="btn btn-primary btn-sm" onclick="blog_action('edit','{{ blog.blog_id }}')">修改</button>
+        <button class="btn btn-danger btn-sm" onclick="blog_action('delete','{{ blog.blog_id }}')">删除</button>
+    </div>
+        <hr>
+</div>
+
+{% endfor %}

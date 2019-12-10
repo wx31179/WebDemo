@@ -1,0 +1,103 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{% static 'css/bootstrap.min.css' %}?v=1" rel="stylesheet">
+    <link href="{% static 'css/custom.css' %}?v=1.0" rel="stylesheet">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <link rel="icon" href="{% static 'images/icon.png' %}" type="image/x-icon"/>
+    <meta charset="UTF-8">
+    <title>老王的博客</title>
+<style type="text/css">
+    html
+        {
+            height: 100%;
+        }
+    body
+        {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+
+        }
+    .container
+        {
+            min-height: 88%;
+        }
+    .footer {
+            position: absolute;
+            width: 100%;
+            height: 50px;
+            z-index: 10;
+            text-align: center;
+        }
+</style>
+</head>
+<body>
+<script type="text/javascript" color="0,0,255" opacity='0.7' zIndex="0" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="m-3">
+                    <h2>{{ user }}的博客</h2>
+                </div>
+                <div class="float-right pr-5">
+                    <label for="default">默认</label>
+                    <input name="orderby" type="radio" id="default" value="default" onclick="change_oderby()" checked>
+                    <label for="time">按时间</label>
+                    <input name="orderby" type="radio" id="time" onclick="change_oderby()" value="time">
+                </div>
+            </div>
+            <div class="col d-flex flex-column" id="blog_view">
+
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <hr class="my-2" style="height:5px;border:none;border-top:2px ridge skyblue;">
+                <div class="text-center pb-2">
+                    <strong>Copyright © 2019</strong>
+                    <a href="{% url 'article' %}"><span>老王的博客</span></a>
+                    <a href="mailto:wx31179@163.com">联系我</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script language="JavaScript">
+    $(document).ready(function() {
+        load_blog()
+    });
+    function change_oderby() {
+        load_blog()
+    }
+    function load_blog() {
+        orderby=$("input[name='orderby']:checked").val();
+        $("#blog_view").load("/blog_list/",{"orderby":orderby})
+    }
+    function blog_action(action,blog_id) {
+        if(action==="delete"){
+            if(confirm("确定删除该博客吗？")){
+                $.post("/blog_change/",{"action":action,"blog_id":blog_id},function (data) {
+                    if(data["info"]==="done"){
+                        load_blog()
+                    }else {
+                        alert(data["info"])
+                    }
+                })
+
+            }
+        }else{
+            window.open('/edit_blog/'+blog_id)
+        }
+    }
+</script>
+</body>
+</html>

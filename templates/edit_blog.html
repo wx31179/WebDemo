@@ -1,0 +1,267 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{% static 'css/bootstrap.min.css' %}?v=1" rel="stylesheet">
+    <link href="{% static 'css/custom.css' %}?v=1.0" rel="stylesheet">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/module.js' %}"></script>
+    <script src="{% static 'js/hotkeys.js' %}"></script>
+    <script src="{% static 'js/uploader.js' %}"></script>
+    <script src="{% static 'js/simditor.js' %}?v=1.3"></script>
+    <link rel="stylesheet" href="{% static 'css/simditor.css' %}?v=1.5">
+    <link rel="stylesheet" href="{% static 'css/mobile.css' %}">
+    <script src="//at.alicdn.com/t/font_1535172_613m4ojcfkm.js"></script>
+    <link rel="icon" href="{% static 'images/icon.png' %}" type="image/x-icon"/>
+    <meta charset="UTF-8">
+    <title>老王的博客</title>
+    <style type="text/css">
+        .icon {
+           width: 2.2em; height: 2.2em;
+           vertical-align: -0.15em;
+           fill: currentColor;
+           overflow: hidden;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            min-height: 88%;
+        }
+
+        .footer {
+            position: absolute;
+            width: 100%;
+            height: 50px;
+            z-index: 10;
+            text-align: center;
+        }
+        img{
+            max-width: 700px;
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript" color="0,0,255" opacity='0.7' zIndex="0" count="99"
+        src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="m-3">
+                    <h3 class="text-center">
+                        {{ blog_content.tittle }}
+                    </h3>
+                </div>
+                <hr>
+                <form method="post" action="{% url 'edit_blog' blog_content.blog_id %}">
+                    {% csrf_token %}
+                        <div class="form-group my-lg-5">
+                            <textarea class="form-control" id="editor" name="content">
+                                {{ blog_content.content }}
+                            </textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-light">文章标签</span>
+                                    </div>
+                                    <select class="form-control" id="tag" name="tag">
+                                        {% for tag in tag_list %}
+                                            <option value="{{ tag }}">{{ tag }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4 pl-0" id="tag_input">
+                                <a href="javascript:void(0)" onclick="create_input('tag')">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#iconjiahao"></use>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    <div class="row mt-lg-3">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-light">分类专栏</span>
+                                </div>
+                                <select class="form-control" id="classification" name="classification">
+                                    {% for classification in classification_list %}
+                                        <option value="{{ classification }}">{{ classification }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4 pl-0" id="classification_input">
+                            <a href="javascript:void(0)" onclick="create_input('classification')">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#iconjiahao"></use>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row mt-lg-3">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-light">文章类型</span>
+                                </div>
+                                <select class="form-control" id="type" name="type">
+                                    {% for type in type_list %}
+                                        <option value="{{ type }}">{{ type }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4 pl-0" id="type_input">
+                            <a href="javascript:void(0)" onclick="create_input('type')">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#iconjiahao"></use>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row mt-lg-3">
+                       <div class="col">
+                            <button type="submit" class="btn btn-primary btn-sm mr-3">提交</button>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="window.location='/main/'">返回</button>
+                            <div class="mt-3" id="message">
+                                {{ info }}
+                            </div>
+                       </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <hr class="my-2" style="height:5px;border:none;border-top:2px ridge skyblue;">
+                <div class="text-center pb-2">
+                    <strong>Copyright © 2019</strong>
+                    <a href="{% url 'article' %}"><span>老王的博客</span></a>
+                    <a href="mailto:wx31179@163.com">联系我</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script language="JavaScript">
+     $(document).ready(function () {
+         (function () {
+             $(function () {
+                 var editor, toolbar;
+                 Simditor.locale = 'zh-CN';
+                 toolbar = ['title', 'bold', 'italic', 'underline', 'strikethrough',
+                     'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', 'code',
+                     'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent',
+                     'alignment'];
+
+                 editor = new Simditor({
+                     textarea: $('#editor'),
+                     toolbar: toolbar,
+                     pasteImage: true,
+                     defaultImage: '/simditor/images/image.png',
+                     upload: {
+                         url: '/file_upload/',
+                         params: null,
+                         fileKey: "upload_file",
+                         connectionCount: 3,
+                         leaveConfirm: "正在上传,确定要取消上传文件吗?"
+                     }
+                 });
+             });
+             }).call(this)
+         });
+
+    function create_input(choice) {
+         if(choice==="classification"){
+             document.getElementById("classification_input").innerHTML = '<div class="input-group">\n' +
+                                                                                '<input class="form-control" id="new_'+choice+'">\n' +
+                                                                                  '<div class="input-group-append">\n'+
+                                                                                    '<button class="btn btn-primary" type="button" onclick="add_content('+'\''+choice+'\''+')">添加</button>\n' +
+                                                                                    '<button class="btn btn-danger" type="button" onclick="cancel('+'\''+choice+'\''+')">取消</button>\n' +
+                                                                                  '</div>\n' +
+                                                                            '</div>\n'
+
+         }else if(choice==="tag"){
+             document.getElementById("tag_input").innerHTML = '<div class="input-group">\n' +
+                                                                                '<input class="form-control" id="new_'+choice+'">\n' +
+                                                                                  '<div class="input-group-append">\n'+
+                                                                                    '<button class="btn btn-primary" type="button" onclick="add_content('+'\''+choice+'\''+')">添加</button>\n' +
+                                                                                    '<button class="btn btn-danger" type="button" onclick="cancel('+'\''+choice+'\''+')">取消</button>\n' +
+                                                                                  '</div>\n' +
+                                                                            '</div>\n'
+         }else {
+             document.getElementById("type_input").innerHTML = '<div class="input-group">\n' +
+                                                                                '<input class="form-control" id="new_'+choice+'">\n' +
+                                                                                  '<div class="input-group-append">\n'+
+                                                                                    '<button class="btn btn-primary" type="button" onclick="add_content('+'\''+choice+'\''+')">添加</button>\n' +
+                                                                                    '<button class="btn btn-danger" type="button" onclick="cancel('+'\''+choice+'\''+')">取消</button>\n' +
+                                                                                  '</div>\n' +
+                                                                            '</div>\n'
+         }
+     }
+
+     function cancel(choice) {
+         if(choice==="classification"){
+         document.getElementById("classification_input").innerHTML =    '<a href="javascript:void(0)" onclick="create_input('+'\''+choice+'\''+')">\n'+
+                                                                            '<svg class="icon" aria-hidden="true">\n' +
+                                                                                '<use xlink:href="#iconjiahao"></use>\n' +
+                                                                            '</svg>\n' +
+                                                                        '</a>'
+         }else if(choice==="tag"){
+             document.getElementById("tag_input").innerHTML =    '<a href="javascript:void(0)" onclick="create_input('+'\''+choice+'\''+')">\n'+
+                                                                            '<svg class="icon" aria-hidden="true">\n' +
+                                                                                '<use xlink:href="#iconjiahao"></use>\n' +
+                                                                            '</svg>\n' +
+                                                                        '</a>'
+         }else {
+             document.getElementById("type_input").innerHTML =    '<a href="javascript:void(0)" onclick="create_input('+'\''+choice+'\''+')">\n'+
+                                                                            '<svg class="icon" aria-hidden="true">\n' +
+                                                                                '<use xlink:href="#iconjiahao"></use>\n' +
+                                                                            '</svg>\n' +
+                                                                        '</a>'
+         }
+     }
+
+     function add_content(choice) {
+         var content="new_"+choice;
+         var new_content = document.getElementById(content).value;
+         $.post('/add_content/',{"choice":choice,"content":new_content},function (info) {
+             if(info["info"]==="done"){
+                 $.post('/fresh_data/',{"choice":choice},function (data) {
+                     document.getElementById(choice).innerHTML = "";
+                     for(var i in data["data"]){
+                        $("#"+choice).append('<option value='+'\"'+data["data"][i]+'\"'+'>'+data["data"][i]+'</option>')
+                     }
+                 });
+                 cancel(choice);
+                document.getElementById("message").innerHTML = '<div class="alert alert-success">创建成功</div>'
+
+             }else {
+                 document.getElementById("message").innerHTML = '<div class="alert alert-danger">'+info["info"]+'</div>'
+
+             }
+         })
+
+     }
+</script>
+</body>
+</html>

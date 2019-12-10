@@ -1,0 +1,65 @@
+<form class="mx-auto" role="form" method="post" action="{%  url 'register_user' %}" style="width: 300px">
+    <div class="modal-header ">
+        <h4 class="modal-title text-center" >注册新用户</h4>
+    </div>
+    {% csrf_token %}
+    <div class="modal-body">
+        <div class="row" style="margin-top: 30px" >
+            <div class="col">
+                <div class="row">
+                    <div class="input-group mb-3" style="padding-bottom: 10px;padding-top: 20px">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="font-size: 10px">用户名</span>
+                        </div>
+                        <input class="form-control" type="text" id="new_name" name="new_name" required>
+                    </div>
+                    <div class="input-group mb-3" style="padding-bottom: 10px;padding-top: 10px">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="font-size: 10px">注册邮箱</span>
+                        </div>
+                        <input class="form-control" type="email" id="new_email" name="new_email" required>
+                    </div>
+                    <div class="input-group mb-3" style="padding-bottom: 10px;padding-top: 10px">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="font-size: 10px">密码</span>
+                        </div>
+                        <input class="form-control" type="password" id="new_password" name="new_password"  required>
+                    </div>
+                    <div class="input-group mb-3" style="padding-bottom: 20px;padding-top: 10px">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="font-size: 10px">重复密码</span>
+                        </div>
+                        <input class="form-control" type="password" id="new_re_password" name="new_re_password" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="register_message">
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-sm" type="button" onclick="register_user()">提交</button>
+        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">关闭</button>
+    </div>
+</form>
+<script>
+ function register_user() {
+     var new_name=document.getElementById("new_name").value;
+     var new_email=document.getElementById("new_email").value;
+     var new_password=document.getElementById("new_password").value;
+     var new_re_password=document.getElementById("new_re_password").value;
+     $.post("/register_user/",{"new_name":new_name,
+                                "new_email":new_email,
+                                "new_password":new_password,
+                                "new_re_password":new_re_password},function (data) {
+
+         if(data["message"]==="success"){
+             location.href='/'
+         } else{
+             document.getElementById("register_message").innerHTML = '<div class="alert alert-danger">'+data["message"]+'</div>'
+         }
+     })
+
+ }
+</script>
