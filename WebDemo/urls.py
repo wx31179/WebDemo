@@ -19,7 +19,7 @@ from django.conf.urls import url
 from django.conf import settings
 from django.views.static import serve
 from Web_Demo.views import index,register_user,change_password,test,article,write_blog,add_content,fresh_data,file_upload\
-    ,view_blog,my_blog,blog_list,blog_change,edit_blog
+    ,view_blog,my_blog,blog_list,blog_change,edit_blog,weather
 
 
 urlpatterns = [
@@ -28,6 +28,7 @@ urlpatterns = [
     url(r"^article/$", article, name="article"),
     url(r"^change_password/$", change_password, name="change_password"),
     url(r"^write_blog/$", write_blog, name="write_blog"),
+    url(r"^weather/$", weather, name="weather"),
     url(r"^test/$", test, name="test"),
     #JS操作
     url(r"^add_content/$", add_content, name="add_content"),

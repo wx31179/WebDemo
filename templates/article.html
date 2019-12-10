@@ -220,7 +220,7 @@
             </div>
             <div class="col-sm-3">
                 <div class="card">
-                    <div id="weather-view-he"></div>
+                    <div class="w-100" id="weather"></div>
                 </div>
             </div>
         </div>
@@ -278,42 +278,20 @@
 </style>
 <script language="JavaScript">
     $(document).ready(function() {
-        WIDGET = {ID: 'G5N9FNVNgM'};
-        loadScript('https://apip.weatherdt.com/view/static/js/r.js?v=1111',function () {
-           console.log("onload")
-        });
-        document.getElementById("weather-view-he").className = "w-100";
         load_blog();
-
+        $("#weather").load("/weather/");
+        document.getElementById("weather-view-he").style.width = "100%"
         //$.get("https://www.metaweather.com/api/location/search/",{"query":"Seoul"},function (data) {
             //console.log(data)
         //});
     });
+
+
 
     function load_blog() {
         orderby=$("input[name='orderby']:checked").val();
         $("#article_log").load("/article/",{"key":"default"})
     }
 
-    function loadScript(src, callback) {
-      var script = document.createElement('script'),
-        head = document.getElementsByTagName('head')[0];
-      script.type = 'text/javascript';
-      script.charset = 'UTF-8';
-      script.src = src;
-      if (script.addEventListener) {
-        script.addEventListener('load', function () {
-          callback();
-        }, false);
-      } else if (script.attachEvent) {
-        script.attachEvent('onreadystatechange', function () {
-          var target = window.event.srcElement;
-          if (target.readyState == 'loaded') {
-            callback();
-          }
-        });
-      }
-      head.appendChild(script);
-    }
 </script>
 </html>

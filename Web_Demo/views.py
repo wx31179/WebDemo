@@ -258,6 +258,10 @@ def blog_change(request):
         except BaseException as e:
             return JsonResponse({"info":"%s"%e},safe=False)
 
+@csrf_exempt
+def weather(request):
+    return render(request,'../templates/weather.html')
+
 
 #处理上传图片函数
 @csrf_exempt
