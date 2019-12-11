@@ -10,7 +10,7 @@ import re
 from django.conf import settings
 from django.contrib.auth.hashers import make_password, check_password
 from django.http import JsonResponse
-from django.shortcuts import HttpResponse, render, redirect
+from django.shortcuts import HttpResponse, render, redirect,HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import loginuser, auth_email, blog_attributes,blog
@@ -21,7 +21,7 @@ from .models import loginuser, auth_email, blog_attributes,blog
 @csrf_exempt
 def index(request):
     if request.method == "GET":
-        return render(request,"../templates/login.html")
+        return render(request, "../templates/login.html")
     else:
         user = request.POST.get("user")
         password = request.POST.get("password")
@@ -42,6 +42,11 @@ def index(request):
                 return JsonResponse({"message": "用户名不存在!"}, safe=False)
         else:
             return JsonResponse({"message": "用户名不能为空!"}, safe=False)
+
+def userlogout(request):
+    request.session.delete("session_key")
+    request.session.clear()
+    return HttpResponseRedirect('/article/')
 
 @csrf_exempt
 def register_user(request):
@@ -82,7 +87,7 @@ def article(request):
         bg_path = os.path.join("%s"%settings.STATICFILES_DIRS,"images")
         bg_list = os.listdir(("{0}/{1}").format(bg_path,"blog_bg"))
         num = random.randint(0,len(bg_list)-1)
-        blog_content = blog.objects.all()
+        blog_content = blog.objects.all().order_by("-create_Time")
         for i in blog_content:
             dr = re.compile(r'<[^>]+>', re.S)
             dd = dr.sub('', i.content)

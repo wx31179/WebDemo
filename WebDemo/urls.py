@@ -19,11 +19,12 @@ from django.conf.urls import url
 from django.conf import settings
 from django.views.static import serve
 from Web_Demo.views import index,register_user,change_password,test,article,write_blog,add_content,fresh_data,file_upload\
-    ,view_blog,my_blog,blog_list,blog_change,edit_blog,weather
+    ,view_blog,my_blog,blog_list,blog_change,edit_blog,weather,userlogout
 
 
 urlpatterns = [
     url(r"^$",index,name="index"),
+    url(r"^userlogout/$", userlogout, name="userlogout"),
     url(r"^register_user/$",register_user, name="register_user"),
     url(r"^article/$", article, name="article"),
     url(r"^change_password/$", change_password, name="change_password"),

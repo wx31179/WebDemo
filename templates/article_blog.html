@@ -1,12 +1,12 @@
 <div class="row">
 {% for blog in blog_content %}
     <div class="col-12">
-        <div class="box border card-shadow mb-3 rounded">
+        <div class="box border card-shadow mb-3 rounded bg-white">
             <h5 class="box-title text-truncate" title="{{ blog.tittle }}">{{ blog.tittle }}</h5>
             <div class="body-row">
                 <img class="img-fluid img-max" src="../static/images/backimage.jpg" alt="Card image">
                 <div class="box-body text-p m-1">
-                    <p class="box-text text-p font-weight-normal">
+                    <p class="box-text text-p text-muted">
                             {{ blog.content }}
                     </p>
                     <a class="box-link btn btn-sm btn-info" href="{% url 'view_blog' blog.blog_id %}" target="_blank">阅读全文</a>
