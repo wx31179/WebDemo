@@ -2,7 +2,7 @@
 <div>
     <hr>
     <div class="m-3">
-        <a href="{% url 'view_blog' blog.blog_id %}" target="_blank">{{ blog.tittle }}</a>
+        <a href="{% url 'view_blog' blog.id %}" target="_blank">{{ blog.tittle }}</a>
         <p class="text-truncate my-3">{{ blog.content }}</p>
         <p>{{ blog.create_Time | date:'Y-m-d H:i:s' }}</p>
     </div>

@@ -1,48 +1,73 @@
-<form class="mx-auto" role="form" method="post" action="{%  url 'register_user' %}" style="width: 300px">
-    <div class="modal-header ">
-        <h4 class="modal-title text-center" >注册新用户</h4>
-    </div>
-    {% csrf_token %}
-    <div class="modal-body">
-        <div class="row" style="margin-top: 30px" >
-            <div class="col">
-                <div class="row">
-                    <div class="input-group mb-3" style="padding-bottom: 10px;padding-top: 20px">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="font-size: 10px">用户名</span>
-                        </div>
-                        <input class="form-control" type="text" id="new_name" name="new_name" required>
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{% static 'css/bootstrap.min.css' %}?v=1" rel="stylesheet">
+    <link href="{% static 'css/custom.css' %}?v=0.0" rel="stylesheet">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="//at.alicdn.com/t/font_1535172_y4bw2cxl2mi.js"></script>
+    <link rel="icon" href="{% static 'images/icon.png' %}" type="image/x-icon"/>
+    <meta charset="UTF-8">
+    <title>老王的博客</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form class="mx-auto w-25" role="form" method="post" action="{%  url 'register_user' %}">
+                    <div class="modal-header ">
+                        <h4 class="modal-title text-center" >注册新用户</h4>
                     </div>
-                    <div class="input-group mb-3" style="padding-bottom: 10px;padding-top: 10px">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="font-size: 10px">注册邮箱</span>
+                    <div class="modal-body">
+                        <div class="row" style="margin-top: 30px" >
+                            <div class="col">
+                                <div class="row">
+                                    <div class="input-group mb-3" style="padding-bottom: 10px;padding-top: 20px">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="font-size: 10px">用户名</span>
+                                        </div>
+                                        <input class="form-control" type="text" id="new_name" name="new_name" required>
+                                    </div>
+                                    <div class="input-group mb-3" style="padding-bottom: 10px;padding-top: 10px">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="font-size: 10px">注册邮箱</span>
+                                        </div>
+                                        <input class="form-control" type="email" id="new_email" name="new_email" required>
+                                    </div>
+                                    <div class="input-group mb-3" style="padding-bottom: 10px;padding-top: 10px">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="font-size: 10px">密码</span>
+                                        </div>
+                                        <input class="form-control" type="password" id="new_password" name="new_password"  required>
+                                    </div>
+                                    <div class="input-group mb-3" style="padding-bottom: 20px;padding-top: 10px">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="font-size: 10px">重复密码</span>
+                                        </div>
+                                        <input class="form-control" type="password" id="new_re_password" name="new_re_password" required>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <input class="form-control" type="email" id="new_email" name="new_email" required>
                     </div>
-                    <div class="input-group mb-3" style="padding-bottom: 10px;padding-top: 10px">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="font-size: 10px">密码</span>
-                        </div>
-                        <input class="form-control" type="password" id="new_password" name="new_password"  required>
+                    <div id="register_message">
+
                     </div>
-                    <div class="input-group mb-3" style="padding-bottom: 20px;padding-top: 10px">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" style="font-size: 10px">重复密码</span>
-                        </div>
-                        <input class="form-control" type="password" id="new_re_password" name="new_re_password" required>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btn-sm" type="button" onclick="register_user()">提交</button>
+                        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">关闭</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-    <div id="register_message">
 
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary btn-sm" type="button" onclick="register_user()">提交</button>
-        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">关闭</button>
-    </div>
-</form>
+</body>
+</html>
+
 <script>
  function register_user() {
      var new_name=document.getElementById("new_name").value;

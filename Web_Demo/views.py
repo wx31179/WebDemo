@@ -21,7 +21,10 @@ from .models import loginuser, auth_email, blog_attributes,blog
 @csrf_exempt
 def index(request):
     if request.method == "GET":
-        return render(request, "../templates/login.html")
+        if request.is_ajax():
+            return render(request, "../templates/login.html")
+        else:
+            return redirect("/article/")
     else:
         user = request.POST.get("user")
         password = request.POST.get("password")
@@ -58,13 +61,18 @@ def register_user(request):
         email = request.POST.get("new_email")
         password = request.POST.get("new_password")
         re_password = request.POST.get("new_re_password")
-        print(password,re_password)
         if password != re_password:
             return JsonResponse({"message": "密码输入不一致"}, safe=False)
         else:
             try:
-                loginuser.objects.create(user=name,email=email,password=make_password(password))
+                loginuser.objects.create(user=name,
+                                         email=email,
+                                         password=make_password(password),
+                                         last_login_time=datetime.datetime.now(),
+                                         create_Time=datetime.datetime.now())
                 auth_email.objects.create(user=name,email=email)
+                request.session["username"] = name
+                request.session["password"] = password
                 return JsonResponse({"message":"success"},safe=False)
             except BaseException as e:
                 return JsonResponse({"message":"%s"%e},safe=False)
@@ -144,9 +152,10 @@ def write_blog(request):
             return JsonResponse({"info":"%s"%e})
 
 def view_blog(request,blog_id):
-    blog_content = blog.objects.get(blog_id=blog_id)
+    blog_content = blog.objects.get(id=blog_id)
+    print(blog_content.id)
     view_count = blog_content.view_count
-    blog.objects.filter(blog_id=blog_id).update(view_count=view_count+1)
+    blog.objects.filter(id=blog_id).update(view_count=view_count+1)
     return render(request,'../templates/view_blog.html',{"blog_content":blog_content})
 
 @csrf_exempt
