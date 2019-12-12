@@ -19,7 +19,7 @@ from django.conf.urls import url
 from django.conf import settings
 from django.views.static import serve
 from Web_Demo.views import index,register_user,change_password,test,article,write_blog,add_content,fresh_data,file_upload\
-    ,view_blog,my_blog,blog_list,blog_change,edit_blog,weather,userlogout
+    ,view_blog,my_blog,blog_list,blog_change,edit_blog,weather,userlogout,aphorisms_request
 
 
 urlpatterns = [
@@ -36,6 +36,7 @@ urlpatterns = [
     url(r"^fresh_data/$", fresh_data, name="fresh_data"),
     url(r"^blog_list/$", blog_list, name="blog_list"),
     url(r"^blog_change/$", blog_change, name="blog_change"),
+    url(r"^aphorisms_request/$", aphorisms_request, name="aphorisms_request"),
     #上传图片处理
     url(r'^file_upload/', file_upload),
     url(r'^uploads/(?P<path>.*)$', serve, {'document_root': settings.UPLOAD_ROOT}),

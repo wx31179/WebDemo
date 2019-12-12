@@ -31,3 +31,7 @@ class blog(models.Model):
     mod_Time = models.DateTimeField('最后修改时间', auto_now=True)
     view_count = models.IntegerField(default=0)
     applaud_count = models.IntegerField(default=0)
+
+class aphorisms(models.Model):
+    content = models.CharField(max_length=100)
+    author = models.CharField(max_length=100)

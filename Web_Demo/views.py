@@ -13,7 +13,7 @@ from django.http import JsonResponse
 from django.shortcuts import HttpResponse, render, redirect,HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import loginuser, auth_email, blog_attributes,blog
+from .models import loginuser, auth_email, blog_attributes,blog,aphorisms
 
 
 # Create your views here.
@@ -275,6 +275,12 @@ def blog_change(request):
 @csrf_exempt
 def weather(request):
     return render(request,'../templates/weather.html')
+
+def aphorisms_request(request):
+    aphorisms_count = len(aphorisms.objects.all().values())
+    count = random.randint(1,aphorisms_count)
+    aphorisms_content = aphorisms.objects.get(id=count)
+    return JsonResponse({"content":aphorisms_content.content,"author":aphorisms_content.author},safe=False)
 
 
 #处理上传图片函数
