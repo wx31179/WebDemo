@@ -153,7 +153,6 @@ def write_blog(request):
 
 def view_blog(request,blog_id):
     blog_content = blog.objects.get(id=blog_id)
-    print(blog_content.id)
     view_count = blog_content.view_count
     blog.objects.filter(id=blog_id).update(view_count=view_count+1)
     return render(request,'../templates/view_blog.html',{"blog_content":blog_content})

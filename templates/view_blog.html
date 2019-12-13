@@ -67,63 +67,59 @@
     <header></header>
     <div class="container">
         <div class="row">
-            <div class="col">
-                <div class="m-3">
-                    <div>
-                        <h4 class="py-1"><small class="border bg-blue p-1">{{ blog_content.type }}</small>   {{ blog_content.tittle }}</h4>
-                        <div class="d-flex mt-3">
-                            <div class="ml-1 mr-2" title="发布时间">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#iconshijian"></use>
-                                </svg>
-                                <span>{{ blog_content.create_Time| date:'Y-m-d H:i'}}</span>
-                            </div>
-                            <div class="mx-2" title="发布人">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#iconzuozhe"></use>
-                                </svg>
-                                <span>{{ blog_content.subbmiter }}</span>
-                            </div>
-                            <div class="mx-2" title="查看次数">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#iconchakan"></use>
-                                </svg>
-                                <span>{{ blog_content.view_count }}</span>
-                            </div>
-                            <div class="mx-2" title="点赞数">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#iconzan"></use>
-                                </svg>
-                                <span>{{ blog_content.applaud_count }}</span>
-                            </div>
-                            <div class="mx-2" title="收藏数">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#iconyishoucang"></use>
-                                </svg>
-                                <span>{{ blog_content.applaud_count }}</span>
-                            </div>
-                            <div class="mx-2" title="分类">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#iconleixing"></use>
-                                </svg>
-                                <span>{{ blog_content.classification }}</span>
-                            </div>
-                            <div class="mx-2" title="标签">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#iconbiaoqian"></use>
-                                </svg>
-                                <span >{{ blog_content.tag }}</span>
-                            </div>
-                        </div>
+            <section class="col m-3">
+                <h4 class="py-1"><small class="border bg-blue p-1">{{ blog_content.type }}</small>   {{ blog_content.tittle }}</h4>
+                <div class="d-flex mt-3">
+                    <div class="ml-1 mr-2" title="发布时间">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#iconshijian"></use>
+                        </svg>
+                        <span>{{ blog_content.create_Time| date:'Y-m-d H:i'}}</span>
                     </div>
-                    <hr style="height:5px;border:none;border-top:2px ridge skyblue;">
-                    <div class=" px-2">
-                        {% autoescape off %}
-                            {{ blog_content.content}}
-                        {% endautoescape %}
+                    <div class="mx-2" title="发布人">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#iconzuozhe"></use>
+                        </svg>
+                        <span>{{ blog_content.subbmiter }}</span>
+                    </div>
+                    <div class="mx-2" title="查看次数">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#iconchakan"></use>
+                        </svg>
+                        <span>{{ blog_content.view_count }}</span>
+                    </div>
+                    <div class="mx-2" title="点赞数">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#iconzan"></use>
+                        </svg>
+                        <span>{{ blog_content.applaud_count }}</span>
+                    </div>
+                    <div class="mx-2" title="收藏数">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#iconyishoucang"></use>
+                        </svg>
+                        <span>{{ blog_content.applaud_count }}</span>
+                    </div>
+                    <div class="mx-2" title="分类">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#iconleixing"></use>
+                        </svg>
+                        <span>{{ blog_content.classification }}</span>
+                    </div>
+                    <div class="mx-2" title="标签">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#iconbiaoqian"></use>
+                        </svg>
+                        <span >{{ blog_content.tag }}</span>
                     </div>
                 </div>
-            </div>
+                <hr style="height:5px;border:none;border-top:2px ridge skyblue;">
+                <article class=" px-2">
+                    {% autoescape off %}
+                        {{ blog_content.content}}
+                    {% endautoescape %}
+                </article>
+            </section>
         </div>
     </div>
     <footer class="footer">
